@@ -35,17 +35,10 @@ call plug#begin('~/.vim/plugged')
 	Plug 'preservim/nerdtree'
 	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 	Plug 'ryanoasis/vim-devicons'
-	Plug 'mihaifm/bufstop'
 	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 	Plug 'junegunn/fzf.vim'
 	Plug 'neoclide/coc-eslint'
 	Plug 'jiangmiao/auto-pairs'
-	Plug 'tpope/vim-commentary'
-	Plug 'wookayin/fzf-ripgrep.vim'
-	Plug 'prettier/vim-prettier', {
-	  \ 'do': 'yarn install --frozen-lockfile --production',
-	  \ 'branch': 'release/0.x'
-	  \ }
 
 call plug#end()
 
