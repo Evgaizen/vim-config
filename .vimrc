@@ -16,8 +16,7 @@ set noswapfile
 set re=0
 set encoding=UTF-8
 set guifont=JetBrains\ Mono:h14
-let $FZF_DEFAULT_COMMAND='find . \( -name node_modules -o -name .git \) -prune -o -print'
-
+let $FZF_DEFAULT_COMMAND="rg --files -g '!node_modules'"
 " Cursor shape in different modes
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
@@ -72,6 +71,7 @@ nnoremap nf :NERDTreeFind<CR>
 " FZF map
 nnoremap ff :Files<CR>
 nnoremap fl :BLines<CR>
+nnoremap fw :Rg<CR>
 
 " Keymap Coc
 nmap <silent> ga  <Plug>(coc-codeaction)
