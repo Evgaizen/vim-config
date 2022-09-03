@@ -17,6 +17,7 @@ set re=0
 set encoding=UTF-8
 set guifont=JetBrains\ Mono:h14
 let $FZF_DEFAULT_COMMAND="rg --files -g '!node_modules'"
+"
 " Cursor shape in different modes
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
@@ -44,12 +45,18 @@ call plug#begin('~/.vim/plugged')
  Plug 'junegunn/fzf.vim'
  Plug 'neoclide/coc-eslint'
  Plug 'jiangmiao/auto-pairs'
+ Plug 'editorconfig/editorconfig-vim'
+ Plug 'morhetz/gruvbox'
 call plug#end()
 
 " Coc config
 let g:coc_global_extensions = ['coc-tsserver', 'coc-css', 'coc-eslint']
 autocmd CursorHold * silent call CocAction('showSignatureHelp')
 nnoremap <silent> K :call ShowDocumentation()<CR>
+inoremap <silent><expr> <c-@> coc#refresh()
+autocmd CursorHold * silent call CocActionAsync('highlight')
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 function! ShowDocumentation()
   if CocAction('hasProvider', 'hover')
@@ -73,6 +80,11 @@ nnoremap ff :Files<CR>
 nnoremap fl :BLines<CR>
 nnoremap fw :Rg<CR>
 
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case -g "!node_modules" -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
+
 " Keymap Coc
 nmap <silent> ga  <Plug>(coc-codeaction)
 nmap <silent> gf  <Plug>(coc-fix-current)
@@ -85,3 +97,6 @@ nmap <silent> gr <Plug>(coc-references)
 nmap <silent> bn :bn<CR>
 nmap <silent> bp :bp<CR>
 nmap <silent> bd :bd<CR>
+
+" Theme
+autocmd vimenter * ++nested colorscheme gruvbox
